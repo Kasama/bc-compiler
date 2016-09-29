@@ -1,0 +1,153 @@
+1. <program>
+2. <input_item><program>
+3. <function_def><program>
+4. 'define' <LETTER> '(' <opt_args_list> ')' '{' <NL>
+	<opt_auto_defs_list>
+	<statement_list>
+	'}' <program>
+5. 'define' 'f' '(' <opt_args_list> ')' '{' <NL>
+	<opt_auto_defs_list>
+	<statement_list>
+	'}' <program>
+6. 'define' 'f' '(' '' ')' '{' <NL>
+	<opt_auto_defs_list>
+	<statement_list>
+	'}' <program>
+7. 'define' 'f' '(' '' ')' '{' '\n'
+	<opt_auto_defs_list>
+	<statement_list>
+	'}' <program>
+8. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' <defs_list> <NL>
+	<statement_list>
+	'}' <program>
+9. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' <LETTER> <NL>
+	<statement_list>
+	'}' <program>
+10. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' <NL>
+	<statement_list>
+	'}' <program>
+11. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	<statement_list>
+	'}' <program>
+12. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	<statement_list><NL><statement>
+	'}' <program>
+13. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	<statement><NL><statement>
+	'}' <program>
+14. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	<expression><NL><statement>
+	'}' <program>
+15. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	<relational><NL><statement>
+	'}' <program>
+16. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	<assignment><NL><statement>
+	'}' <program>
+17. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	<plus_minus><ASSIGNMENT><assignment><NL><statement>
+	'}' <program>
+18. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	<mult><ASSIGNMENT><assignment><NL><statement>
+	'}' <program>
+19. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	<power><ASSIGNMENT><assignment><NL><statement>
+	'}' <program>
+20. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	<unary_minus><ASSIGNMENT><assignment><NL><statement>
+	'}' <program>
+21. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	<inc_dec><ASSIGNMENT><assignment><NL><statement>
+	'}' <program>
+22. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	<expression><ASSIGNMENT><assignment><NL><statement>
+	'}' <program>
+23. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	<named_var><ASSIGNMENT><assignment><NL><statement>
+	'}' <program>
+24. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	<LETTER><ASSIGNMENT><assignment><NL><statement>
+	'}' <program>
+25. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	'a' <ASSIGNMENT><assignment><NL><statement>
+	'}' <program>
+26. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	'a' '=' <assignment><NL><statement>
+	'}' <program>
+27. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	'a' '=' <plus_minus><NL><statement>
+	'}' <program>
+28. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	'a' '=' <mult><NL><statement>
+	'}' <program>
+29. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	'a' '=' <power><NL><statement>
+	'}' <program>
+30. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	'a' '=' <unary_minus><NL><statement>
+	'}' <program>
+31. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	'a' '=' <inc_dec><NL><statement>
+	'}' <program>
+32. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	'a' '=' <expression><NL><statement>
+	'}' <program>
+33. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	'a' '=' '2'<NL><statement>
+	'}' <program>
+34. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	'a' '=' '2' '\n'
+	<statement>
+	'}' <program>
+35. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	'a' '=' '2' '\n'
+	'return' '(' <expression> ')'
+	'}' <program>
+36. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	'a' '=' '2' '\n'
+	'return' '(' <named_var> ')'
+	'}' <program>
+37. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	'a' '=' '2' '\n'
+	'return' '(' 'a' ')'
+	'}' <program>
+38. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	'a' '=' '2' '\n'
+	'return' '(' 'a' ')'
+	'}' <EOF>
+39. 'define' 'f' '(' '' ')' '{' '\n'
+	'auto' 'a' '\n'
+	'a' '=' '2' '\n'
+	'return' '(' 'a' ')'
+	'}' ''

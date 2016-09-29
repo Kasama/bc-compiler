@@ -1,0 +1,181 @@
+1. <program>
+2. <input_item> <program>
+3. <function_def> <program>
+4. 'define'<LETTER>'(' <opt_args_list> ')' '{'<NL><opt_auto_defs_list> <statement_list> '}' <program>
+5. 'define' 'f' '(' <opt_args_list> ')' '{' <NL> <opt_auto_defs_list> <statement_list> '}' <program>
+6. 'define' 'f' '(' <args_list> ')' '{' <NL> <opt_auto_defs_list> <statement_list> '}' <program>
+7. 'define' 'f' '(' <LETTER> ')' '{' <NL> <opt_auto_defs_list> <statement_list> '}' <program>
+8. 'define' 'f' '(' 'n' ')' '{' <NL> <opt_auto_defs_list> <statement_list> '}' <program>
+9. 'define' 'f' '(' 'n' ')' '{' '\n'
+   <opt_auto_defs_list> <statement_list> '}' <program>
+10. 'define' 'f' '(' 'n' ')' '{' '\n'
+   '' <statement_list> '}' <program>
+11. 'define' 'f' '(' 'n' ')' '{' '\n'
+   <statement_list> <NL> <statement> '}' <program>
+12. 'define' 'f' '(' 'n' ')' '{' '\n'
+   <statement> <NL> <statement> '}' <program>
+13. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' <expression> ')' <statement> <NL> <statement> '}' <program>
+14. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' <relational> ')' <statement> <NL> <statement> '}' <program>
+15. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' <assignment> <RELATION> <relational> ')' <statement> <NL> <statement> '}' <program>
+16. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' <plus_minus> <RELATION> <relational> ')' <statement> <NL> <statement> '}' <program>
+17. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' <mult> <RELATION> <relational> ')' <statement> <NL> <statement> '}' <program>
+18. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' <power> <RELATION> <relational> ')' <statement> <NL> <statement> '}' <program>
+19. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' <unary_minus> <RELATION> <relational> ')' <statement> <NL> <statement> '}' <program>
+20. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' <inc_dec> <RELATION> <relational> ')' <statement> <NL> <statement> '}' <program>
+21. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' <expression> <RELATION> <relational> ')' <statement> <NL> <statement> '}' <program>
+22. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' <named_var> <RELATION> <relational> ')' <statement> <NL> <statement> '}' <program>
+23. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' <RELATION> <relational> ')' <statement> <NL> <statement> '}' <program>
+24. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' <relational> ')' <statement> <NL> <statement> '}' <program>
+25. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' <assignment> ')' <statement> <NL> <statement> '}' <program>
+26. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' <plus_minus> ')' <statement> <NL> <statement> '}' <program>
+27. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' <mult> ')' <statement> <NL> <statement> '}' <program>
+28. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' <power> ')' <statement> <NL> <statement> '}' <program>
+29. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' <unary_minus> ')' <statement> <NL> <statement> '}' <program>
+30. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' <inc_dec> ')' <statement> <NL> <statement> '}' <program>
+31. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' <expression> ')' <statement> <NL> <statement> '}' <program>
+32. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' <NUMBER> ')' <statement> <NL> <statement> '}' <program>
+33. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' <statement> <NL> <statement> '}' <program>
+34. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' <expression> ')' <NL> <statement> '}' <program>
+35. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' <NUMBER> ')' <NL> <statement> '}' <program>
+36. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' <NL> <statement> '}' <program>
+37. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   <statement> '}' <program>
+38. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' <expression> ')' '}' <program>
+39. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' <relational> ')' '}' <program>
+40. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' <assignment> ')' '}' <program>
+41. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' <plus_minus> ')' '}' <program>
+42. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' <mult> ')' '}' <program>
+43. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' <power> <MULT_OP> <mult> ')' '}' <program>
+44. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' <unary_minus> <MULT_OP> <mult> ')' '}' <program>
+45. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' <inc_dec> <MULT_OP> <mult> ')' '}' <program>
+46. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' <named_var> <MULT_OP> <mult> ')' '}' <program>
+47. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' <LETTER> <MULT_OP> <mult> ')' '}' <program>
+48. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' <MULT_OP> <mult> ')' '}' <program>
+49. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' <mult> ')' '}' <program>
+50. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' <power> ')' '}' <program>
+51. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' <unary_minus> ')' '}' <program>
+52. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' <inc_dec> ')' '}' <program>
+53. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' <expression> ')' '}' <program>
+54. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' <LETTER> '(' <opt_exp_list> ')' ')' '}' <program>
+55. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' 'f' '(' <opt_exp_list> ')' ')' '}' <program>
+56. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' 'f' '(' <expression> ')' ')' '}' <program>
+57. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' 'f' '(' <relational> ')' ')' '}' <program>
+58. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' 'f' '(' <plus_minus> ')' ')' '}' <program>
+59. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' 'f' '(' <mult> <MINUS> <plus_minus> ')' ')' '}' <program>
+60. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' 'f' '(' <power> <MINUS> <plus_minus> ')' ')' '}' <program>
+61. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' 'f' '(' <unary_minus> <MINUS> <plus_minus> ')' ')' '}' <program>
+62. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' 'f' '(' <inc_dec> <MINUS> <plus_minus> ')' ')' '}' <program>
+63. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' 'f' '(' <expression> <MINUS> <plus_minus> ')' ')' '}' <program>
+64. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' 'f' '(' <named_var> <MINUS> <plus_minus> ')' ')' '}' <program>
+65. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' 'f' '(' 'n' <MINUS> <plus_minus> ')' ')' '}' <program>
+66. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' 'f' '(' 'n' '-' <plus_minus> ')' ')' '}' <program>
+67. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' 'f' '(' 'n' '-' <mult> ')' ')' '}' <program>
+68. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' 'f' '(' 'n' '-' <power> ')' ')' '}' <program>
+69. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' 'f' '(' 'n' '-' <unary_minus> ')' ')' '}' <program>
+70. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' 'f' '(' 'n' '-' <inc_dec> ')' ')' '}' <program>
+71. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' 'f' '(' 'n' '-' <expression> ')' ')' '}' <program>
+72. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' 'f' '(' 'n' '-' <NUMBER> ')' ')' '}' <program>
+73. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' 'f' '(' 'n' '-' '1' ')' ')' '}' <program>
+74. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' 'f' '(' 'n' '-' '1' ')' ')' '}' <EOF>
+75. 'define' 'f' '(' 'n' ')' '{' '\n'
+   'if' '(' 'n' '==' '0' ')' 'return' '(' '1' ')' '\n'
+   'return' '(' 'n' '*' 'f' '(' 'n' '-' '1' ')' ')' '}' ''

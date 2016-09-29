@@ -1,0 +1,141 @@
+<inc_dec_sym> ::=   "++"" | "--""
+<unary_minus_sym> ::= "-"
+<power_sym> ::=  "^"
+<mult_sym> ::= "*"  | "/"  | "%"
+<assigment_sym> ::= "+"  | "-"  | "="  | "+=" | "-=" | "*=" | "/=" | "%=" | "^="
+<relational_sym>  ::= "==" | "<=" | ">=" | "!=" | "<"  | ">"
+<bool_not_sym>   ::= “!”
+<bool_and_sym>  ::= “&&”
+<bool_or_sym>    ::= “||”
+
+<expression> ::= <bool_or>
+
+<bool_or> ::= <bool_and><bool_or_sym><bool_or>
+	| <bool_and>
+
+<bool_and> ::= <bool_not><bool_and_sym><bool_and>
+	| <bool_not>
+
+<bool_not> ::= <bool_not_sym><bool_not>
+	| <relational>
+
+<relational> ::= <assigment><assigment_sym><relational>
+	| <assigment>
+
+<assigment> ::= <mult><mult_sym><power>
+	| <power>
+
+<power> ::= <unary_minus><unary_minus_sym>
+	| <inc_dec>
+
+<inc_dec> ::= <number>
+
+
+<N> = "0" | "1" | "2" | "3" | "4"
+	| "5" | "6" | "7" | "8" | "9" ;
+
+<L> = "a" | "b" | "c" | "d" | "e" | "f"
+	| "g" | "h" | "i" | "j" | "k" | "l"
+	| "m" | "n" | "o" | "p" | "q" | "r"
+	| "s" | "t" | "u" | "v" | "w" | "x"
+	| "y" | "z" ;
+
+<ibase> ::= “ibase”
+<obase> ::= “obase”
+<scale> ::= “scale”
+<last> ::= “last”
+<dot> ::= “.”
+<inc_dec_sym> ::=   "++"" | "--""
+<unary_minus_sym> ::= "-"
+<power_sym> ::=  "^"
+<mult_sym> ::= "*"  | "/"  | "%" 
+<plus_minus> ::="+"  | "-"  
+<assigment_sym> ::= "="  | "+=" | "-=" | "*=" | "/=" | "%=" | "^="
+<relational_sym>  ::= "==" | "<=" | ">=" | "!=" | "<"  | ">"
+<bool_not_sym>   ::= “!”
+<bool_and_sym>  ::= “&&”
+<bool_or_sym>    ::= “||”
+
+<operator>   ::=  <inc_dec_sym>
+<unary_minus_sym>
+| <power_sym>
+| <mult_sym>
+| <plus_minus>
+| <assigment_sym>
+| <relational_sym>
+| <bool_not_sym>
+| <bool_and_sym>
+| <bool_or_sym>
+
+<simple_var> ::= <L>
+<array_elem> ::= <L> "[" E "]"
+
+<bool_or> ::= <bool_and><bool_or_sym><bool_or>
+    | <bool_and>
+
+<bool_and> ::= <bool_not><bool_and_sym><bool_and>
+    | <bool_not>
+
+<bool_not> ::= 
+
+<statement> ::=
+    | E
+    | “{“ <statement> “;” <statements> “}”
+| “if“ “(“ E “)” <statement> “else” <statement>
+| “while” “(“ E “)” <statement> 
+| <for>
+| <null_statement>
+| “break”
+| “continue”
+| “quit”
+| <string>
+| “print” <expressions>
+
+<null_statement> ::= “null” | “nil”
+
+<for> ::= “for” “(“ E “;” E “;” E “)” <statement>
+    | “for” “(“ “;” E “;” E “)” <statement>
+    | “for” “(“ E “;” “;” E “)” <statement>
+    | “for” “(“ E “;” E “;” “)” <statement>
+    | “for” “(“ “;” “;” E “)” <statement>
+    | “for” “(““;” E “;” “)” <statement>
+    | “for” “(“ E “;” “;” “)” <statement>
+    | “for” “(“ “;” “;” “)” <statement>
+
+<statements> ::= <statements> “;” <statement>
+    | <statement>
+
+<expressions> ::= <expressions> ”,” E
+    | E
+
+<string> ::= “\”” <chars> “\””
+<chars> ::= <chars><char>
+
+
+
+<number> ::= +<unsigned_number>
+    | -<unsigned_number>
+    | <unsigned_number>
+
+<unsigned_number> ::= <float>
+    | <integer>
+
+<integer> ::= <integer><N>
+    | <N>
+
+<float> ::= <integer><dot><integer>
+
+<function> ::= “define” L “(“ <letter_list> “)” “{“
+                    “auto” <letter_list>
+                       <statement_list>
+                    <return>
+                  “}”
+<return> ::= “return” E
+    | “return” “(“ “)”
+    | “return” 
+
+
+<letter_list> ::= <letter_list> “,” L
+    | L
+<statement_list> ::= <statement_list> “;” S
+    | S

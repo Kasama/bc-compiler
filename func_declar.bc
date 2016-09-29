@@ -1,0 +1,5 @@
+define f() {
+	auto a
+	a = 2
+	return (a)
+}

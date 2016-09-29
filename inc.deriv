@@ -1,0 +1,126 @@
+1. <program>
+2. <input_item><program>
+3. <break_list><NL><program>
+4. <statement><NL><program>
+5. <expression><NL><program>
+6. <relational><NL><program>
+7. <assignment><NL><program>
+8. <named_var><ASSIGNMENT><assignment><NL><program>
+9. 'a'<ASSIGNMENT><assignment><NL><program>
+10. 'a' '=' <assignment><NL><program>
+11. 'a' '=' <plus_minus><NL><program>
+12. 'a' '=' <mult><NL><program>
+13. 'a' '=' <power><NL><program>
+14. 'a' '=' <unary_minus><NL><program>
+15. 'a' '=' <inc_dec><NL><program>
+16. 'a' '=' <expression><NL><program>
+17. 'a' '=' <NUMBER><NL><program>
+18. 'a' '=' '2'<NL><program>
+19. 'a' '=' '2' '\n'
+	<program>
+20. 'a' '=' '2' '\n'
+	<program>
+21. 'a' '=' '2' '\n'
+	<program>
+22. 'a' '=' '2' '\n'
+	<input_item>
+	<program>
+23. 'a' '=' '2' '\n'
+	<break_list><NL>
+	<program>
+24. 'a' '=' '2' '\n'
+	<statement><NL>
+	<program>
+25. 'a' '=' '2' '\n'
+	<expression><NL>
+	<program>
+26. 'a' '=' '2' '\n'
+	<relational><NL>
+	<program>
+27. 'a' '=' '2' '\n'
+	<assignment><NL>
+	<program>
+28. 'a' '=' '2' '\n'
+	<plus_minus><NL>
+	<program>
+29. 'a' '=' '2' '\n'
+	<mult><NL>
+	<program>
+30. 'a' '=' '2' '\n'
+	<power><NL>
+	<program>
+31. 'a' '=' '2' '\n'
+	<unary_minus><NL>
+	<program>
+32. 'a' '=' '2' '\n'
+	<MINUS><inc_dec><NL>
+	<program>
+33. 'a' '=' '2' '\n'
+	'-'<inc_dec><NL>
+	<program>
+34. 'a' '=' '2' '\n'
+	'-'<expression><NL>
+	<program>
+35. 'a' '=' '2' '\n'
+	'-'<relational><NL>
+	<program>
+36. 'a' '=' '2' '\n'
+	'-'<assignment><NL>
+	<program>
+37. 'a' '=' '2' '\n'
+	'-'<plus_minus><NL>
+	<program>
+38. 'a' '=' '2' '\n'
+	'-'<mult><NL>
+	<program>
+39. 'a' '=' '2' '\n'
+	'-'<power><MULT_OP><mult><NL>
+	<program>
+40. 'a' '=' '2' '\n'
+	'-'<unary_minus><MULT_OP><mult><NL>
+	<program>
+41. 'a' '=' '2' '\n'
+	'-'<inc_dec><MULT_OP><mult><NL>
+	<program>
+42. 'a' '=' '2' '\n'
+	'-'<expression><MULT_OP><mult><NL>
+	<program>
+43. 'a' '=' '2' '\n'
+	'-'<NUMBER><MULT_OP><mult><NL>
+	<program>
+44. 'a' '=' '2' '\n'
+	'-' '2'<MULT_OP><mult><NL>
+	<program>
+45. 'a' '=' '2' '\n'
+	'-' '2' '*' <mult><NL>
+	<program>
+46. 'a' '=' '2' '\n'
+	'-' '2' '*' <power><NL>
+	<program>
+47. 'a' '=' '2' '\n'
+	'-' '2' '*' <unary_minus><NL>
+	<program>
+48. 'a' '=' '2' '\n'
+	'-' '2' '*' <inc_dec><NL>
+	<program>
+49. 'a' '=' '2' '\n'
+	'-' '2' '*' <INC_DEC><named_var><NL>
+	<program>
+50. 'a' '=' '2' '\n'
+	'-' '2' '*' '++'<named_var><NL>
+	<program>
+51. 'a' '=' '2' '\n'
+	'-' '2' '*' '++'<LETTER><NL>
+	<program>
+52. 'a' '=' '2' '\n'
+	'-' '2' '*' '++' 'a'<NL>
+	<program>
+53. 'a' '=' '2' '\n'
+	'-' '2' '*' '++' 'a' '\n'
+	<program>
+54. 'a' '=' '2' '\n'
+	'-' '2' '*' '++' 'a' '\n'
+	<EOF>
+55. 'a' '=' '2' '\n'
+	'-' '2' '*' '++' 'a' '\n'
+	''
