@@ -1,3 +1,19 @@
+G = { Vn, Vt, P, <program> };
+
+Vn = {
+	<NUMBER>, <INTEGER>, <program>, <input_item>, <break_list>,
+	<function_def>, <statement>, <opt_args_list>, <opt_auto_defs_list>,
+	<statement_list>, <args_list>, <defs_list>, <expression>, <STRING>,
+	<named_var>, <relational>, <opt_exp_list>, <assignment>,
+	<plus_minus>, <mult>, <power>, <minus>, <unary_minus>, <inc_dec>
+}
+
+Vt = {
+	<NL>, <PLUS>, <MINUS>, <POWER>, <INC_DEC>, <MULT_OP>, <RELATION>, <ASSIGNMENT>, <DIGIT>, <LETTER>, <EOF>
+}
+
+P = {
+
 <NL>           ::= ‘\n’
 <PLUS>         ::= ‘+’
 <MINUS>        ::= ‘-’
@@ -113,3 +129,4 @@
     | ‘scale’
     | ‘ibase’
     | ‘obase’
+}
