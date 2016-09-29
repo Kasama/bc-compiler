@@ -1,141 +1,115 @@
-<inc_dec_sym> ::=   "++"" | "--""
-<unary_minus_sym> ::= "-"
-<power_sym> ::=  "^"
-<mult_sym> ::= "*"  | "/"  | "%"
-<assigment_sym> ::= "+"  | "-"  | "="  | "+=" | "-=" | "*=" | "/=" | "%=" | "^="
-<relational_sym>  ::= "==" | "<=" | ">=" | "!=" | "<"  | ">"
-<bool_not_sym>   ::= “!”
-<bool_and_sym>  ::= “&&”
-<bool_or_sym>    ::= “||”
+<NL>           ::= ‘\n’
+<PLUS>         ::= ‘+’
+<MINUS>        ::= ‘-’
+<POWER>        ::= ‘^’
+<INC_DEC>      ::= ‘++’ | ‘--’
+<MULT_OP>      ::= ‘*’  | ‘/’  | ’%’
+<RELATION>     ::= ‘==’ | ‘<=’ | ‘>=’ | ’!=’ | ’<’  | ’>’
+<ASSIGNMENT>   ::= ‘=’  | ‘+=’ | ’-=’ | ’*=’ | ’/=’ | ’%=’ | ’^=’
 
-<expression> ::= <bool_or>
+<NUMBER> ::= <INTEGER>
+    | <INTEGER> ‘.’
+    | ‘.’ <INTEGER>
+    | <INTEGER> ‘.’ <INTEGER>
 
-<bool_or> ::= <bool_and><bool_or_sym><bool_or>
-	| <bool_and>
+<INTEGER> ::= <DIGIT>
+    | <INTEGER> <DIGIT>
 
-<bool_and> ::= <bool_not><bool_and_sym><bool_and>
-	| <bool_not>
+<DIGIT> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7
+          | 8 | 9 | A | B | C | D | E | F
 
-<bool_not> ::= <bool_not_sym><bool_not>
-	| <relational>
+<LETTER> ::= a | b | c | d | e | f | g | h | i | j | k | l | m
+           | n | o | p | q | r | s | t | u | v | w | x | y | z
 
-<relational> ::= <assigment><assigment_sym><relational>
-	| <assigment>
+<program> ::= <EOF>
+    | <input_item> <program>
 
-<assigment> ::= <mult><mult_sym><power>
-	| <power>
+<input_item> ::= <break_list> <NL>
+    | <function_def>
 
-<power> ::= <unary_minus><unary_minus_sym>
-	| <inc_dec>
-
-<inc_dec> ::= <number>
-
-
-<N> = "0" | "1" | "2" | "3" | "4"
-	| "5" | "6" | "7" | "8" | "9" ;
-
-<L> = "a" | "b" | "c" | "d" | "e" | "f"
-	| "g" | "h" | "i" | "j" | "k" | "l"
-	| "m" | "n" | "o" | "p" | "q" | "r"
-	| "s" | "t" | "u" | "v" | "w" | "x"
-	| "y" | "z" ;
-
-<ibase> ::= “ibase”
-<obase> ::= “obase”
-<scale> ::= “scale”
-<last> ::= “last”
-<dot> ::= “.”
-<inc_dec_sym> ::=   "++"" | "--""
-<unary_minus_sym> ::= "-"
-<power_sym> ::=  "^"
-<mult_sym> ::= "*"  | "/"  | "%" 
-<plus_minus> ::="+"  | "-"  
-<assigment_sym> ::= "="  | "+=" | "-=" | "*=" | "/=" | "%=" | "^="
-<relational_sym>  ::= "==" | "<=" | ">=" | "!=" | "<"  | ">"
-<bool_not_sym>   ::= “!”
-<bool_and_sym>  ::= “&&”
-<bool_or_sym>    ::= “||”
-
-<operator>   ::=  <inc_dec_sym>
-<unary_minus_sym>
-| <power_sym>
-| <mult_sym>
-| <plus_minus>
-| <assigment_sym>
-| <relational_sym>
-| <bool_not_sym>
-| <bool_and_sym>
-| <bool_or_sym>
-
-<simple_var> ::= <L>
-<array_elem> ::= <L> "[" E "]"
-
-<bool_or> ::= <bool_and><bool_or_sym><bool_or>
-    | <bool_and>
-
-<bool_and> ::= <bool_not><bool_and_sym><bool_and>
-    | <bool_not>
-
-<bool_not> ::= 
-
-<statement> ::=
-    | E
-    | “{“ <statement> “;” <statements> “}”
-| “if“ “(“ E “)” <statement> “else” <statement>
-| “while” “(“ E “)” <statement> 
-| <for>
-| <null_statement>
-| “break”
-| “continue”
-| “quit”
-| <string>
-| “print” <expressions>
-
-<null_statement> ::= “null” | “nil”
-
-<for> ::= “for” “(“ E “;” E “;” E “)” <statement>
-    | “for” “(“ “;” E “;” E “)” <statement>
-    | “for” “(“ E “;” “;” E “)” <statement>
-    | “for” “(“ E “;” E “;” “)” <statement>
-    | “for” “(“ “;” “;” E “)” <statement>
-    | “for” “(““;” E “;” “)” <statement>
-    | “for” “(“ E “;” “;” “)” <statement>
-    | “for” “(“ “;” “;” “)” <statement>
-
-<statements> ::= <statements> “;” <statement>
+<break_list> ::= // empty
     | <statement>
+    | <break_list> ‘;’
+    | <break_list> ‘;’ <statement>
 
-<expressions> ::= <expressions> ”,” E
-    | E
+<function_def> ::= ‘define’ <LETTER> ‘(‘ <opt_args_list> ‘)’ ‘{‘ <NL>
+                <opt_auto_defs_list>
+                <statement_list>
+                ‘}’
 
-<string> ::= “\”” <chars> “\””
-<chars> ::= <chars><char>
+<opt_args_list> ::= // empty
+    | <args_list>
 
-
-
-<number> ::= +<unsigned_number>
-    | -<unsigned_number>
-    | <unsigned_number>
-
-<unsigned_number> ::= <float>
-    | <integer>
-
-<integer> ::= <integer><N>
-    | <N>
-
-<float> ::= <integer><dot><integer>
-
-<function> ::= “define” L “(“ <letter_list> “)” “{“
-                    “auto” <letter_list>
-                       <statement_list>
-                    <return>
-                  “}”
-<return> ::= “return” E
-    | “return” “(“ “)”
-    | “return” 
+<args_list> ::= <LETTER>
+    | <args_list> ‘,’ <LETTER>
 
 
-<letter_list> ::= <letter_list> “,” L
-    | L
-<statement_list> ::= <statement_list> “;” S
-    | S
+<opt_auto_defs_list> ::= // empty
+    | ‘auto’ <defs_list> <NL>
+    | ‘auto’ <defs_list> ‘;’
+
+
+<defs_list> ::= <LETTER>
+    | <LETTER> ‘[‘ ‘]’
+    | ‘defs_list’, <LETTER>
+    | ‘defs_list’, <LETTER> ‘[‘ ‘]’
+
+<statement_list> ::= // empty
+    | <statement>
+    | <statement_list> <NL>
+    | <statement_list> ‘;’
+    | <statement_list> <NL> <statement>
+    | <statement_list> ‘;’ <statement>
+
+<statement> ::= <expression>
+    | ‘{‘ <statement_list> ‘}’
+    | ‘if’ ‘(‘<expression>‘)’<statement>
+    | ‘while’ ‘(‘<expression>‘)’<statement>
+    | ‘for’ ‘(‘<expression>’;’<expression>’;’<expression>’)’<statement>
+    | <STRING>
+    | ‘quit’
+    | ‘break’
+    | ‘return’
+    | ‘return’ ‘(‘ <expression> ‘)’
+
+<expression> ::= <NUMBER>
+    | <named_var>
+    | <relational>
+    | ‘(‘ <expression> ‘)’
+    | LETTER ‘(‘ <opt_exp_list> ‘)’
+    | ‘length’ ‘(‘ <expression> ‘)’
+    | ‘scale’ ‘(‘ <expression> ‘)’
+    | ‘sqrt’ ‘(‘ <expression> ‘)’
+
+<opt_exp_list> ::= // empty
+    | <expression>
+    | <opt_exp_list> ‘,’ <expression>
+
+<relational> ::= <assignment> <RELATION> <relational>
+    | <assignment>
+
+<assignment> ::= <named_var> <ASSIGNMENT> <assignment>
+    | <plus_minus>
+
+<plus_minus> ::= <mult> <PLUS> <plus_minus>
+    | <mult> <MINUS> <plus_minus>
+    | <mult>
+
+<mult> ::= <power> <MULT_OP> <mult>
+    | <power>
+
+<power> ::= <minus> <POWER> <power>
+    | <unary_minus>
+
+<unary_minus> ::= <MINUS> <inc_dec>
+    | <inc_dec>
+
+<inc_dec> ::= <INC_DEC> <named_var>
+    | <named_var> <INC_DEC>
+    | <expression>
+
+<named_var> ::= <LETTER>
+    | <LETTER> ‘[‘ <expression> ‘]’
+    | ‘scale’
+    | ‘ibase’
+    | ‘obase’
