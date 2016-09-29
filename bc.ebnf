@@ -1,0 +1,75 @@
+<NL>            = ‘\n’;
+<PLUS>          = ‘+’;
+<MINUS>         = ‘-’;
+<POWER>         = ‘^’;
+<INC_DEC>       = ‘++’ | ‘--’;
+<MULT_OP>       = ‘*’  | ‘/’  | ’%’;
+<RELATION>      = ‘==’ | ‘<=’ | ‘>=’ | ’!=’ | ’<’  | ’>’;
+<ASSIGNMENT>    = ‘=’  | ‘+=’ | ’-=’ | ’*=’ | ’/=’ | ’%=’ | ’^=’;
+
+<DIGIT> = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7
+        | 8 | 9 | A | B | C | D | E | F
+        ;
+
+<LETTER> = a | b | c | d | e | f | g | h | i | j | k | l | m
+         | n | o | p | q | r | s | t | u | v | w | x | y | z
+         ;
+
+<NUMBER> = ( {<DIGIT>}+[.] |  {<DIGIT>}*,’.’,{<DIGIT>}+);
+
+<function_def> = `define`,<LETTER>,`(`,[<LETTER>,{`,`,<LETTER>}*],`)`,`{`,<NL>
+        [{`auto`,<var_def>,{`, `<var_def>}*,<NL>}+]
+        (<statement> | {<statement>,(<NL> | `;`)}+)
+        `}`;
+
+<var_def> = (<LETTER>,`[`,`]` | <LETTER>);
+
+<statement> = <expression>
+    | ‘{‘, (<statement> | {<statement> (<NL> | `;`)}+), ‘}’
+    | (if | while), ‘(‘, <expression>, ‘)’, <statement>
+    | ‘for’, ‘(‘<expression>, ’;’, <expression>, ’;’, <expression>, ’)’, <statement>
+    | <STRING> | ‘quit’ | ‘break’ | `return` [‘(‘ ,<expression>, ‘)’]
+    ;
+
+<named_var> = <LETTER> [‘[‘, <expression>, ‘]’]
+    | ‘scale’
+    | ‘ibase’
+    | ‘obase’
+    ;
+
+<expression> = <NUMBER>
+    | <named_var>
+    | <relational>
+    | ‘(‘, <expression>, ‘)’
+    | LETTER ‘(‘, [<expression>, {`,`, <expression>]}*], ‘)’
+    | (‘length’ | ‘scale’ | ‘sqrt’), ‘(‘, <expression>, ‘)’
+    ;
+
+<relational> = <assignment> [<RELATION> <relational>];
+
+<assignment> = <named_var> <ASSIGNMENT> <assignment>
+    | <plus_minus>
+    ;
+
+<plus_minus> = <mult> [(<PLUS> | <MINUS>) <plus_minus>];
+
+<mult> = <power> [<MULT_OP> <mult>];
+
+<power> = <minus> <POWER> <power>
+    | <unary_minus>
+    ;
+
+<unary_minus> = <MINUS> <inc_dec>
+    | <inc_dec>
+    ;
+
+<inc_dec> = <INC_DEC>, <named_var>
+    | <named_var>, <INC_DEC>
+    | <expression>
+    ;
+
+<named_var> = <LETTER> [‘[‘, <expression>, ‘]’]
+    | ‘scale’
+    | ‘ibase’
+    | ‘obase’
+    ;
