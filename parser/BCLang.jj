@@ -1,0 +1,27 @@
+options
+{
+        LOOKAHEAD = 1;
+}
+
+PARSER_BEGIN(BCLang)
+
+public class BCLang
+{
+
+        public static void main(String[] args) {
+
+                try {
+                        new BCLang(new java.io.StringReader(args[0])).S();
+                        System.out.println("Syntax good, mate");
+                } catch (Throwable e) {
+                        System.out.println("Failure: " + e.getMessage());
+                }
+        }
+}
+
+PARSER_END(BCLang)
+
+SKIP :
+{
+        " " | "\n" | "\r" | "\t"
+}
