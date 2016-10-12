@@ -1,27 +1,230 @@
+// vim: sw=4 ts=4 noexpandtab
 options
 {
-        LOOKAHEAD = 1;
+	LOOKAHEAD = 1;
 }
 
 PARSER_BEGIN(BCLang)
 
-public class BCLang
-{
+	public class BCLang {
 
-        public static void main(String[] args) {
+		public static void main(String[] args) {
 
-                try {
-                        new BCLang(new java.io.StringReader(args[0])).S();
-                        System.out.println("Syntax good, mate");
-                } catch (Throwable e) {
-                        System.out.println("Failure: " + e.getMessage());
-                }
-        }
-}
+			try {
+				(new BCLang(new java.io.StringReader(args[0]))).bc();
+				System.out.println("Syntax good, mate");
+			} catch (Throwable e) {
+				System.out.println("Failure: " + e.getMessage());
+			}
+		}
+	}
 
 PARSER_END(BCLang)
 
-SKIP :
-{
-        " " | "\n" | "\r" | "\t"
+	SKIP : {
+		" "
+			| <"#" (~["\n","\r"])* ("\n"|"\r")>
+			| <"/*" (~["*"])* "*" ("*" | ~["*","/"] (~["*"])* "*")* "/">
+	}
+
+/*Separadores e Agrupadores*/
+	TOKEN: {
+		<LPAR: "("> |<RPAR: ")"> |<LBRACK: "{"> |<RBRACK: "}">
+			| <LSQ_BRACK: "[">
+			| <RSQ_BRACK: "]">
+			| <SEMICOLON: ";">
+			| <ASSIGN: "=">
+			| <COMMA: ",">
+			| <QUOT: "\"">
+			| <DOT: ".">
+	}
+
+	TOKEN: {
+		<SEP: "\\n" | <SEMICOLON>>
+			| <NULL: <SEP>>
+			| <AND: "&&">
+			| <OR: "||">
+			| <NOT: "!">
+			| <GT: ">">
+			| <LT: "<">
+			| <GTE: ">=">
+			| <LTE: "<=">
+			| <EQUAL: "==">
+			| <DIFF: "!=">
+			| <MINUS: "-">
+			| <PLUS: "+">
+			| <DIV: "/">
+			| <MUL: "*">
+			| <MOD: "%">
+			| <POWER: "^">
+			| <PLUSPLUS: "++">
+			| <MINUSMINUS: "--">
+			| <MINUS_ASSIGN: "-=">
+			| <PLUS_ASSIGN: "+=">
+			| <DIV_ASSIGN: "/=">
+			| <MUL_ASSIGN: "*=">
+			| <MOD_ASSIGN: "%=">
+			| <POW_ASSIGN: "^=">
+	}
+
+/*Palavras reservadas e funcoes nativas*/
+	TOKEN: {
+		<IBASE: "ibase">
+			| <OBASE: "obase">
+			| <SCALE: "scale">
+			| <LAST: "last" | <DOT>>
+			| <SQRT: "sqrt">
+			| <LENGTH: "length">
+			| <FUNC_S: "s">
+			| <FUNC_C: "c">
+			| <FUNC_E: "e">
+			| <FUNC_L: "l">
+			| <FUNC_A: "a">
+			| <FUNC_J: "j">
+			| <IF: "if">
+			| <FOR: "for">
+			| <ELSE: "else">
+			| <WHILE: "while">
+			| <PRINT: "print">
+			| <DEFINE: "define">
+			| <BREAK: "break">
+			| <AUTO: "auto">
+			| <QUIT: "quit">
+			| <RETURN: "return">
+			| <CONTINUE: "continue">
+	}
+
+/*Numeros, palavras e identificadores*/
+	TOKEN: {
+		<#DIGIT: ["0"-"9"]>
+			| <#LETTER:
+			"a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" |
+			"j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" |
+			"s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" | "_" >
+			| <#SYMBOL:
+			" " | <NOT> | "%" | "&" | "'" | "(" | ")" | "*" | "+" |
+			"," | "-" | "." | "/" | ":" | ";" | <LT> | <ASSIGN> |
+			<GT>  | "[" | "]" | "^" | "{" | "|" | "}">
+			| <#INTEGER: ("-" | "+")? (<DIGIT>)+ (".")?>
+			| <#REAL: ("-" | "+")? (<DIGIT>)* "." (<DIGIT>)+>
+			| <#ALNUM: <DIGIT> | <LETTER>>
+			| <NUMBER: <INTEGER> | <REAL>>
+			| <ID: <LETTER> (<ALNUM>)*>
+			| <STRING: <QUOT>(<ALNUM>|<SYMBOL>|<SEP>)*<QUOT>>
+	}
+
+void bc(): {} {
+	(command() | function_def())* <EOF>
+}
+
+void command(): {} {
+	expression()
+		| if_statement()
+		| for_statement()
+		| while_statement()
+		| print_statement()
+		| return_statement()
+		| composite_command()
+		| <NULL>
+		| <BREAK>
+		| <CONTINUE>
+		| <STRING>
+		| <QUIT>
+}
+
+void composite_command(): {} {
+	<LBRACK> command_list() <RBRACK>
+}
+
+void command_list(): {} {
+	command() (<SEP> command())*
+}
+
+void if_statement(): {} {
+	<IF> <LPAR> expression() <RPAR> command() (<ELSE> command())?
+}
+
+void for_statement(): {} {
+	<FOR> <LPAR> (expression())? <SEMICOLON> (expression())? <SEMICOLON> (expression())? <RPAR> command()
+}
+
+void while_statement(): {} {
+	<WHILE> <RPAR> expression() <LPAR> command()
+}
+
+void print_statement(): {} {
+	<PRINT> expression_list()
+}
+
+void return_statement(): {} {
+	<RETURN> (<LPAR> expression() <RPAR>)?
+}
+
+void expression_list(): {} {
+	expression() (<COMMA> expression())*
+}
+
+void expression(): {} {
+	E1() ( <OR> E1())*
+}
+
+// boa_sorte: begin
+void E1(): {} {
+	E2() ( <AND> E2())*
+}
+void E2(): {} {
+	(<NOT>)? E3()
+}
+void E3(): {} {
+	E4() ((<EQUAL> | <LTE> | <GTE> | <DIFF> | <LT> | <GT> ) E4())?
+}
+void E4(): {} {
+	(<ID> (<LSQ_BRACK> expression() <RSQ_BRACK>)? ((<PLUSPLUS> | <MINUSMINUS>) | (<ASSIGN> | <PLUS_ASSIGN> | <MINUS_ASSIGN> | <MUL_ASSIGN> | <DIV_ASSIGN> | <MOD_ASSIGN> | <POW_ASSIGN>) E4()))
+	| E5()
+}
+void E5(): {} {
+	E6() ((<PLUS> | <MINUS>) E6())*
+}
+void E6(): {} {
+	E7() ((<MUL> | <DIV> | <MOD> ) E7())*
+}
+void E7(): {} {
+	E8() (<POWER> E7())?
+}
+void E8(): {} {
+	(<MINUS>)? E9()
+}
+void E9(): {} {
+	(<PLUSPLUS> | <MINUSMINUS>) <ID> (<LSQ_BRACK> expression() <RSQ_BRACK>)? | E10()
+}
+
+void E10(): {} {
+	<NUMBER>
+	| <LPAR> expression() <RPAR>
+	| <SQRT> <LPAR> expression() <RPAR>
+	| <LENGTH> <LPAR> expression() <RPAR>
+	| <SCALE> <LPAR> expression() <RPAR>
+	| <ID> function_call_or_array()
+	| <IBASE> | <OBASE> | <LAST> | <DOT>
+	| <FUNC_S> <LPAR> expression() <RPAR>
+	| <FUNC_C> <LPAR> expression() <RPAR>
+	| <FUNC_E> <LPAR> expression() <RPAR>
+	| <FUNC_L> <LPAR> expression() <RPAR>
+	| <FUNC_A> <LPAR> expression() <RPAR>
+	| <FUNC_J> <LPAR> expression() <COMMA> expression() <RPAR>
+}
+
+void function_call_or_array(): {} {
+	<LPAR> (expression_list())? <RPAR>
+	| (<LSQ_BRACK> expression() <RSQ_BRACK>)?
+}
+
+void function_def(): {} {
+	<DEFINE> <ID> <LPAR> (expression_list())? <RPAR> <LBRACK>
+	(<AUTO> auto_list())?
+	command_list() <RBRACK>
+}
+
+void auto_list(): {} {
+	<ID> (<LSQ_BRACK> <RSQ_BRACK>)? (<COMMA> <ID> (<LSQ_BRACK> <RSQ_BRACK>)?)*
 }
