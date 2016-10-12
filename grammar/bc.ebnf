@@ -41,7 +41,7 @@
     | <named_var>
     | <relational>
     | ‘(‘, <expression>, ‘)’
-    | LETTER ‘(‘, [<expression>, {`,`, <expression>]}*], ‘)’
+    | LETTER ‘(‘, [<expression>, {`,`, <expression>}*], ‘)’
     | (‘length’ | ‘scale’ | ‘sqrt’), ‘(‘, <expression>, ‘)’
     ;
 

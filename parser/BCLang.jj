@@ -141,7 +141,7 @@ void command_list(): {} {
 }
 
 void if_statement(): {} {
-	<IF> <LPAR> expression() <RPAR> command() (<ELSE> command())?
+	<IF> <LPAR> expression() <RPAR> command() (LOOKAHEAD(1) <ELSE> command())?
 }
 
 void for_statement(): {} {
@@ -157,7 +157,7 @@ void print_statement(): {} {
 }
 
 void return_statement(): {} {
-	<RETURN> (<LPAR> expression() <RPAR>)?
+	<RETURN> ( expression() )?
 }
 
 void expression_list(): {} {
@@ -179,7 +179,7 @@ void E3(): {} {
 	E4() ((<EQUAL> | <LTE> | <GTE> | <DIFF> | <LT> | <GT> ) E4())?
 }
 void E4(): {} {
-	(<ID> (<LSQ_BRACK> expression() <RSQ_BRACK>)? ((<PLUSPLUS> | <MINUSMINUS>) | (<ASSIGN> | <PLUS_ASSIGN> | <MINUS_ASSIGN> | <MUL_ASSIGN> | <DIV_ASSIGN> | <MOD_ASSIGN> | <POW_ASSIGN>) E4()))
+	(named_var() ((<PLUSPLUS> | <MINUSMINUS>) | (<ASSIGN> | <PLUS_ASSIGN> | <MINUS_ASSIGN> | <MUL_ASSIGN> | <DIV_ASSIGN> | <MOD_ASSIGN> | <POW_ASSIGN>) E4()))
 	| E5()
 }
 void E5(): {} {
@@ -195,17 +195,17 @@ void E8(): {} {
 	(<MINUS>)? E9()
 }
 void E9(): {} {
-	(<PLUSPLUS> | <MINUSMINUS>) <ID> (<LSQ_BRACK> expression() <RSQ_BRACK>)? | E10()
+	(<PLUSPLUS> | <MINUSMINUS>) named_var() | E10()
 }
 
 void E10(): {} {
 	<NUMBER>
+	| named_var()
 	| <LPAR> expression() <RPAR>
 	| <SQRT> <LPAR> expression() <RPAR>
 	| <LENGTH> <LPAR> expression() <RPAR>
-	| <SCALE> <LPAR> expression() <RPAR>
+	| <SCALE> (<LPAR> expression() <RPAR>)?
 	| <ID> function_call_or_array()
-	| <IBASE> | <OBASE> | <LAST> | <DOT>
 	| <FUNC_S> <LPAR> expression() <RPAR>
 	| <FUNC_C> <LPAR> expression() <RPAR>
 	| <FUNC_E> <LPAR> expression() <RPAR>
@@ -226,5 +226,13 @@ void function_def(): {} {
 }
 
 void auto_list(): {} {
-	<ID> (<LSQ_BRACK> <RSQ_BRACK>)? (<COMMA> <ID> (<LSQ_BRACK> <RSQ_BRACK>)?)*
+	named_var() (<COMMA> <ID> (<LSQ_BRACK> <RSQ_BRACK>)?)*
+}
+
+void named_var(): {} {
+	<ID> (<LSQ_BRACK> expression() <RSQ_BRACK>)?
+	| <LAST>
+	| <DOT>
+	| <IBASE>
+	| <OBASE>
 }

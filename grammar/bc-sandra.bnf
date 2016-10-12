@@ -41,7 +41,7 @@
 
 <ListaExpressoes> ::= <E> ( , <E>)*
 
-<RETORNO> ::= return [ ( <E> ) ]
+<RETORNO> ::= return [ <E> ]
 
 /* P3 */
 <E> ::= <E1> (|| <E1>)*
