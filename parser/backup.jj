@@ -1,0 +1,274 @@
+// vim: sw=4 ts=4 noexpandtab
+options
+{
+	LOOKAHEAD = 1;
+}
+
+PARSER_BEGIN(BCLang)
+
+	public class BCLang {
+
+		public static void main(String[] args) {
+			try {
+				BCLang parser = null;
+				if (args.length == 0)
+					parser = new BCLang(System.in);
+				else
+					parser = new BCLang(new java.io.StringReader(args[0]));
+				if (args.length > 1) {
+					parser.program();
+					System.out.println("Lexical analysis complete.");
+				} else {
+					parser.bc();
+					System.out.println("Syntax analysis complete.");
+				}
+			} catch (Throwable e) {
+				System.out.println("Failure: " + e.getMessage());
+			}
+		}
+	}
+
+PARSER_END(BCLang)
+
+	SKIP : {
+		" "
+			| "\t"
+			| <"#" (~["\n","\r"])* ("\n"|"\r")>
+			| <"/*" (~["*"])* "*" ("*" | ~["*","/"] (~["*"])* "*")* "/">
+	}
+
+/*Separadores e Agrupadores*/
+	TOKEN: {
+			<LINEBREAK: "\n">
+			| <SEMICOLON: ";">
+			| <LPAR: "("> |<RPAR: ")"> |<LBRACK: "{"> |<RBRACK: "}">
+			| <LSQ_BRACK: "[">
+			| <RSQ_BRACK: "]">
+			| <ASSIGN: "=">
+			| <COMMA: ",">
+			| <QUOT: "\"">
+			| <DOT: ".">
+	}
+
+	TOKEN: {
+			//<NULL: <EOF>>
+			<AND: "&&">
+			| <OR: "||">
+			| <NOT: "!">
+			| <GT: ">">
+			| <LT: "<">
+			| <GTE: ">=">
+			| <LTE: "<=">
+			| <EQUAL: "==">
+			| <DIFF: "!=">
+			| <MINUS: "-">
+			| <PLUS: "+">
+			| <DIV: "/">
+			| <MUL: "*">
+			| <MOD: "%">
+			| <POWER: "^">
+			| <PLUSPLUS: "++">
+			| <MINUSMINUS: "--">
+			| <MINUS_ASSIGN: "-=">
+			| <PLUS_ASSIGN: "+=">
+			| <DIV_ASSIGN: "/=">
+			| <MUL_ASSIGN: "*=">
+			| <MOD_ASSIGN: "%=">
+			| <POW_ASSIGN: "^=">
+	}
+
+/*Palavras reservadas e funcoes nativas*/
+	TOKEN: {
+		<IBASE: "ibase">
+			| <OBASE: "obase">
+			| <SCALE: "scale">
+			| <LAST: "last" | <DOT>>
+			| <SQRT: "sqrt">
+			| <LENGTH: "length">
+			| <FUNC_S: "s">
+			| <FUNC_C: "c">
+			| <FUNC_E: "e">
+			| <FUNC_L: "l">
+			| <FUNC_A: "a">
+			| <FUNC_J: "j">
+			| <IF: "if">
+			| <FOR: "for">
+			| <ELSE: "else">
+			| <WHILE: "while">
+			| <PRINT: "print">
+			| <DEFINE: "define">
+			| <BREAK: "break">
+			| <AUTO: "auto">
+			| <QUIT: "quit">
+			| <RETURN: "return">
+			| <CONTINUE: "continue">
+	}
+
+/*Numeros, palavras e identificadores*/
+	TOKEN: {
+		<#DIGIT: ["0"-"9"]>
+			| <#LETTER:
+			"a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" |
+			"j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" |
+			"s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" | "_" >
+			| <#SYMBOL:
+			" " | <NOT> | "%" | "&" | "'" | "(" | ")" | "*" | "+" |
+			"," | "-" | "." | "/" | ":" | ";" | <LT> | <ASSIGN> |
+			<GT>  | "[" | "]" | "^" | "{" | "|" | "}">
+			| <NUMBER: <INTEGER> | <REAL>>
+			| <#INTEGER: ("-" | "+")? (<DIGIT>)+ (".")?>
+			| <#REAL: ("-" | "+")? (<DIGIT>)* "." (<DIGIT>)+>
+			| <#ALNUM: <DIGIT> | <LETTER>>
+			| <ID: <LETTER> (<ALNUM>)*>
+			| <STRING: <QUOT>(<ALNUM>|<SYMBOL>|<SEMICOLON>|<LINEBREAK>)*<QUOT>>
+	}
+
+void bc(): {} {
+	(command() | function_def())* <EOF> { System.out.println("found bc()"); }
+}
+
+void command(): {} {
+	expression() { System.out.println("--command:exp"); }
+		| if_statement() { System.out.println("--command:if"); }
+		| for_statement() { System.out.println("--command:for"); }
+		| while_statement() { System.out.println("--command:while"); }
+		| print_statement() { System.out.println("--command:print"); }
+		| return_statement() { System.out.println("--command:return"); }
+		| composite_command() { System.out.println("--command:composite_command"); }
+		//| (<LINEBREAK> | <SEMICOLON>)
+		| <BREAK> { System.out.println("--command:BREAK"); }
+		| <CONTINUE> { System.out.println("--command:CONTINUE"); }
+		| <STRING> { System.out.println("--command:STRING"); }
+		| <QUIT> { System.out.println("--command:QUIT"); }
+}
+
+void composite_command(): {} {
+	<LBRACK> command_list() <RBRACK> { System.out.println("--composite_command"); }
+}
+
+void command_list(): {} {
+	//command() (SEP() command())* { System.out.println("--command_list"); }
+	command() (SEP() (command())? { System.out.println("--command_list"); })*
+	//(LOOKAHEAD(2) (command() | command_list_element()) (SEP())?)
+}
+
+//void command_list_element(): {} {
+//	command() ( SEP() command())+
+//}
+
+void if_statement(): {} {
+	<IF> <LPAR> expression() <RPAR> (<LINEBREAK>)? command() (LOOKAHEAD(1) <ELSE> command())? { System.out.println("--if"); }
+}
+
+void for_statement(): {} {
+	<FOR> <LPAR> (expression())? <SEMICOLON> (expression())? <SEMICOLON> (expression())? <RPAR> command() { System.out.println("--for"); }
+}
+
+void while_statement(): {} {
+	<WHILE> <RPAR> expression() <LPAR> command() { System.out.println("--while"); }
+}
+
+void print_statement(): {} {
+	<PRINT> printable_list() { System.out.println("--print"); }
+}
+
+void printable_list(): {} {
+	(expression() | <STRING>) (<COMMA> (expression() | <STRING>))* { System.out.println("--print_list"); }
+}
+
+void return_statement(): {} {
+	<RETURN> ( expression() )? { System.out.println("--return"); }
+}
+
+void expression_list(): {} {
+	expression() (<COMMA> expression())* { System.out.println("--exp_list"); }
+}
+
+void expression(): {} {
+	E1() (<OR> E1() { System.out.println("--exp->e1"); })* { System.out.println("--exp"); }
+}
+
+// boa_sorte: begin
+void E1(): {} {
+	E2() (<AND> E2() { System.out.println("--exp:e1"); })* { System.out.println("--exp:e1->e2"); }
+}
+void E2(): {} {
+	(<NOT> { System.out.println("--exp:e2"); })? E3() { System.out.println("--exp:e2->e3"); }
+}
+void E3(): {} {
+	E4() ((<EQUAL> | <LTE> | <GTE> | <DIFF> | <LT> | <GT> ) E4() { System.out.println("--exp:e3"); })? { System.out.println("--exp:e3->e4"); }
+}
+void E4(): {} {
+	LOOKAHEAD(2) named_var() ((<PLUSPLUS> | <MINUSMINUS>) | (<ASSIGN> | <PLUS_ASSIGN> | <MINUS_ASSIGN> | <MUL_ASSIGN> | <DIV_ASSIGN> | <MOD_ASSIGN> | <POW_ASSIGN>) E4()) { System.out.println("--exp:e4"); }
+	| E5() { System.out.println("--exp:e4->e5"); }
+}
+void E5(): {} {
+	E6() ((<PLUS> | <MINUS>) E6())* { System.out.println("--exp:e5->e6"); }
+}
+void E6(): {} {
+	E7() ((<MUL> | <DIV> | <MOD>) E7())* { System.out.println("--exp:e6->e7"); }
+}
+void E7(): {} {
+	E8() (<POWER> E7() { System.out.println("--exp:e7"); })? { System.out.println("--exp:e7->e8"); }
+}
+void E8(): {} {
+	(<MINUS> { System.out.println("--exp:e8"); })? E9() { System.out.println("--exp:e8->e9"); }
+}
+void E9(): {} {
+	(<PLUSPLUS> | <MINUSMINUS>) named_var() { System.out.println("--exp:e9"); }
+	| E10() { System.out.println("--exp:e9->e10"); }
+}
+
+void E10(): {} {
+	<NUMBER>{ System.out.println("--exp:number"); }
+	| LOOKAHEAD(2) function_call(){ System.out.println("--exp:function_call"); }
+	| named_var(){ System.out.println("--exp:named_var"); }
+	| <LPAR> expression() <RPAR>{ System.out.println("--exp:parens_exp"); }
+	| <SQRT> <LPAR> expression() <RPAR>{ System.out.println("--exp:sqrt"); }
+	| <LENGTH> <LPAR> expression() <RPAR>{ System.out.println("--exp:length"); }
+	| <SCALE> (LOOKAHEAD(2) <LPAR> expression() <RPAR>)?{ System.out.println("--exp:scale"); }
+	| <FUNC_S> <LPAR> expression() <RPAR>{ System.out.println("--exp:math_s"); }
+	| <FUNC_C> <LPAR> expression() <RPAR>{ System.out.println("--exp:math_c"); }
+	| <FUNC_E> <LPAR> expression() <RPAR>{ System.out.println("--exp:math_e"); }
+	| <FUNC_L> <LPAR> expression() <RPAR>{ System.out.println("--exp:math_l"); }
+	| <FUNC_A> <LPAR> expression() <RPAR>{ System.out.println("--exp:math_a"); }
+	| <FUNC_J> <LPAR> expression() <COMMA> expression() <RPAR>{ System.out.println("--exp:math_j"); }
+}
+
+void function_call(): {} {
+	<ID> <LPAR> (expression_list())? <RPAR>{ System.out.println("--function_call()"); }
+}
+
+void function_def(): {} {
+	<DEFINE> <ID> <LPAR> (expression_list())? <RPAR> <LBRACK> (<LINEBREAK>)*
+	(auto_list() { System.out.println("--function_def():has auto_list"); })?
+	command_list() <RBRACK>
+	{ System.out.println("--function_def()"); }
+}
+
+void auto_list(): {} {
+	<AUTO> named_var() (<COMMA> named_var())* { System.out.println("--auto-list"); }
+}
+
+void named_var(): {} {
+	<ID> (<LSQ_BRACK> expression() <RSQ_BRACK>)? { System.out.println("--named_var"); }
+	| <IBASE> { System.out.println("--named_var_IBASE"); }
+	| <OBASE> { System.out.println("--named_var_OBASE"); }
+	| <LAST> { System.out.println("--named_var_LAST"); }
+	| <DOT> { System.out.println("--named_var_DOT"); }
+}
+
+void SEP(): {} {
+	(<LINEBREAK>|<SEMICOLON>)+
+}
+
+JAVACODE void program()
+{
+  Token t = getNextToken();
+  while(t.kind != 0)
+  {
+    System.out.println("\t (" + t.beginLine + ", " + t.beginColumn + "): " + t.image + " - " + tokenImage[t.kind]);
+    t = getNextToken();
+  }
+}
+
