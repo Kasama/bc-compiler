@@ -105,13 +105,13 @@ void bc(): {} {
 }
 
 void command(): {} {
-	(commandr() (SEP())?)
+	commandr() (SEP())?
 }
 void commandr(): {} {
 	expression() //{ System.out.println("--command:exp"); }
 		| composite_command() //{ System.out.println("--command:composite_command"); }
 		| if_statement() //{ System.out.println("--command:if"); }
-		| for_statement() { System.out.println("--command:for"); }
+		| for_statement() //{ System.out.println("--command:for"); }
 		| while_statement() //{ System.out.println("--command:while"); }
 		| print_statement() //{ System.out.println("--command:print"); }
 		| return_statement() //{ System.out.println("--command:return"); }
