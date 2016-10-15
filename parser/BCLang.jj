@@ -101,11 +101,11 @@ PARSER_END(BCLang)
 	}
 
 void bc(): {} {
-	(command() | function_def())* <EOF> //{ System.out.println("found bc()"); }
+	(command() | function_def())* (SEP())? <EOF> //{ System.out.println("found bc()"); }
 }
 
 void command(): {} {
-	commandr() (SEP())?
+	(commandr() (SEP())?)
 }
 void commandr(): {} {
 	expression() //{ System.out.println("--command:exp"); }
@@ -138,7 +138,7 @@ void command_list(): {} {
 
 void if_statement(): {} {
 	<IF> <LPAR> expression() <RPAR> (<LINEBREAK>)? command()
-	(LOOKAHEAD(1) <ELSE> (<LINEBREAK>)? command())? //{ System.out.println("--if"); }
+	(LOOKAHEAD(2) <ELSE> (<LINEBREAK>)? command())? //{ System.out.println("--if"); }
 }
 
 void for_statement(): {} {
@@ -159,7 +159,7 @@ void printable_list(): {} {
 }
 
 void return_statement(): {} {
-	<RETURN> (LOOKAHEAD(1) expression())? //{ System.out.println("--return"); }
+	<RETURN> (LOOKAHEAD(2) expression())? //{ System.out.println("--return"); }
 }
 
 void expression_list(): {} {
