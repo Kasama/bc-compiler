@@ -1,5 +1,5 @@
 define f() {
-	auto a
-	a = 2
-	return (a)
+	auto ai
+	ai = 2
+	return (ai)
 }
